@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>WIFI VIDEO</title>
+
+        <!-- CSS -->
+        <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">-->
+		<link rel="stylesheet" href="assets/css/form-elements.css"><!--optional-->
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+       <!-- <link rel="shortcut icon" href="assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">-->
+	
+		
+		<link rel="stylesheet" href="css/custom.css"><!--optional-->
+		 <!-- Javascript -->
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.1/require.js"></script>
+		<script>
+
+			//busy
+			function onContinue()
+			{
+				$('#continueDialog').modal('show');
+			}
+	
+			//not busy	
+			function offContinue()
+			{
+				$('#continueDialog').modal('hide');
+			}
+			
+			//fire event
+			function eventFire(el, etype){
+				if (el.fireEvent) {
+					el.fireEvent('on' + etype);
+				} else {
+					var evObj = document.createEvent('Events');
+					evObj.initEvent(etype, true, false);
+					el.dispatchEvent(evObj);
+				}
+			}
+			
+			/*function triggerEvent( elem, event ) {
+				var clickEvent = new Event( event ); // Create the event.
+				elem.dispatchEvent( clickEvent );    // Dispatch the event.
+			}
+			
+			function callback () { 	
+				//document.querySelector('video').play(); 
+				var video = document.getElementById('video_1'); 
+				video.src = video.firstElementChild.src;
+				setTimeout(function() { video.play(); }, 500);
+			} */
+			
+			$(function() {
+			
+				var video = document.getElementById('video_1');
+				video.onplay = function () {
+							//do something
+							$("#msg").html("video is playing automatically. ");
+							if (video.paused) { video.play(); }
+							else { video.play(); }
+						};
+						
+				window.addEventListener('touchstart', function videoStart() {
+					//alert("touch start");
+					eventFire(document.getElementById('video_1'), 'play');
+					// remove from the window and call the function we are removing
+					this.removeEventListener('touchstart', videoStart);
+					//off dialog
+					offContinue();
+				});
+				
+				//triggerEvent( window, 'touchstart' );
+				$( "#closebutton" ).click(function() {
+					//offContinue();
+					//alert("dsd");
+					eventFire(document.getElementById('video_1'), 'play');
+				});
+
+				onContinue();
+				//window.addEventListener("load", callback, false);
+			});
+			
+			
+			
+
+		</script>
+
+    </head>
+
+    <body>
+
+        <!-- Top content -->
+        <div class="top-content">
+			
+            <h1>Play Video 3</h1>
+
+			<span id="msg"></span>
+			<div id="video_content_panel">
+					<!--<video id="video_1" width=300 height=200 controls poster="1.gif">
+				    <source src="resouces/jpm-1.mp4" type="video/mp4">
+					Your browser does not support the video tag.
+					</video>-->
+					
+					<video id="video_1" autobuffer preload width="555" height="330" poster="1.jpg" controls>
+						<source src="resouces/jpm-1.mp4">
+
+					</video>
+			</div>
+			
+			
+        </div>
+
+
+       
+        
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+    </body>
+
+</html>
+
+<!-- Modal -->
+<div id="continueDialog" class="modal fade custom" role="dialog">
+  <div class="modal-dialog custom">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Welcome to Zing Mobile</h4>
+      </div>
+      <div class="modal-body">
+        <p>Setting Up.....</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="closebutton">Proceed</button>
+      </div>
+    </div>
+
+  </div>
+</div>
